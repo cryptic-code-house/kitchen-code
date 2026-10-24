@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <radialGradient id="tomSkin" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#FF4D4D"/>
+      <stop offset="70%" stop-color="#D92525"/>
+      <stop offset="100%" stop-color="#9E1414"/>
+    </radialGradient>
+    <radialGradient id="tomFlesh" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF6B6B"/>
+      <stop offset="85%" stop-color="#D92525"/>
+      <stop offset="100%" stop-color="#B71818"/>
+    </radialGradient>
+  </defs>
+  <!-- Outer rim -->
+  <circle cx="50" cy="50" r="46" fill="url(#tomSkin)" stroke="#1C1512" stroke-width="2.5"/>
+  <!-- Inner pulp -->
+  <circle cx="50" cy="50" r="38" fill="url(#tomFlesh)" stroke="#B71818" stroke-width="1.5"/>
+  <!-- Center core -->
+  <circle cx="50" cy="50" r="10" fill="#FFA5A5"/>
+  <!-- Seed chambers -->
+  <path d="M 50 20 C 44 26 44 38 50 42 C 56 38 56 26 50 20 Z" fill="#FFE29A" stroke="#C49B24" stroke-width="1"/>
+  <path d="M 80 50 C 74 44 62 44 58 50 C 62 56 74 56 80 50 Z" fill="#FFE29A" stroke="#C49B24" stroke-width="1"/>
+  <path d="M 50 80 C 44 74 44 62 50 58 C 56 62 56 74 50 80 Z" fill="#FFE29A" stroke="#C49B24" stroke-width="1"/>
+  <path d="M 20 50 C 26 44 38 44 42 50 C 38 56 26 56 20 50 Z" fill="#FFE29A" stroke="#C49B24" stroke-width="1"/>
+  <!-- Gloss shine -->
+  <ellipse cx="36" cy="32" rx="8" ry="4" transform="rotate(-30 36 32)" fill="#FFFFFF" opacity="0.4"/>
+</svg>

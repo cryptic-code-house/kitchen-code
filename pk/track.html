@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Order Tracking | Dipjit's Pharma Kitchen</title>
+  <meta name="description" content="Track your food preparation and delivery progress in real-time from Dipjit's Pharma Kitchen in Udaipur." />
+  <link rel="icon" type="image/png" href="assets/images/logo_clean.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .track-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      position: relative;
+      margin: 32px 0;
+      padding-left: 20px;
+    }
+    .track-timeline::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      bottom: 25px;
+      left: 38px;
+      width: 4px;
+      background: var(--border-light);
+      z-index: 1;
+    }
+    .track-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+    .step-icon-bubble {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2px solid var(--border-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 2px 2px 0px var(--border-dark);
+      flex-shrink: 0;
+    }
+    .track-step.done .step-icon-bubble {
+      background: var(--accent-green);
+      color: #FFFFFF;
+      border-color: var(--accent-green);
+    }
+    .track-step.current .step-icon-bubble {
+      background: var(--accent-red);
+      color: #FFFFFF;
+      border-color: var(--border-dark);
+      animation: pulseRed 1.8s infinite;
+    }
+    @keyframes pulseRed {
+      0% { box-shadow: 0 0 0 0 rgba(217, 37, 37, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(217, 37, 37, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(217, 37, 37, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-bar">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div class="info-item">
+        <span>🧪 100% Pure Vegetarian</span>
+        <span style="opacity: 0.5;">|</span>
+        <span>⚡ FREE Delivery in Udaipur</span>
+        <span style="opacity: 0.5;">|</span>
+        <span>⏱️ 9:00 AM – 9:00 PM</span>
+      </div>
+      <div class="info-item">
+        <span class="fssai-pill">FSSAI Lic: 22526053000194</span>
+        <a href="tel:+919366727036" style="margin-left: 12px; color: #fff; font-weight: 700;">📞 9366727036</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sticky Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand">
+        <img src="assets/images/logo_clean.png" alt="Dipjit's Pharma Kitchen Logo" class="nav-logo-img" />
+        <div class="brand-text-wrap">
+          <span class="brand-name">Dipjit's</span>
+          <span class="brand-tagline">Pharma Kitchen</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="menu.html" class="nav-link">Menu</a></li>
+        <li><a href="offers.html" class="nav-link">Offers & Combos</a></li>
+        <li><a href="about.html" class="nav-link">Our Story</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="feedback.html" class="nav-link">Reviews</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
+        <li><a href="track.html" class="nav-link active">Track Order</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="order.html" class="nav-cart-btn" aria-label="Shopping Cart">
+          🛒
+          <span class="cart-badge" style="display: none;">0</span>
+        </a>
+        <a href="order.html" class="btn btn-primary btn-sm btn-order-desktop">Order Now</a>
+        <div class="hamburger" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="drawer-backdrop"></div>
+  <aside class="mobile-drawer">
+    <div>
+      <div class="drawer-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="assets/images/logo_clean.png" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%;" />
+          <strong style="font-family: var(--font-serif); font-size: 1.15rem;">Dipjit's Pharma Kitchen</strong>
+        </div>
+        <button class="drawer-close">✕</button>
+      </div>
+      <ul class="drawer-links">
+        <li><a href="index.html" class="drawer-link"><span>Home</span> <span>→</span></a></li>
+        <li><a href="menu.html" class="drawer-link"><span>Menu</span> <span>→</span></a></li>
+        <li><a href="offers.html" class="drawer-link"><span>Special Offers</span> <span>→</span></a></li>
+        <li><a href="about.html" class="drawer-link"><span>About Chef & Kitchen</span> <span>→</span></a></li>
+        <li><a href="gallery.html" class="drawer-link"><span>Food Gallery</span> <span>→</span></a></li>
+        <li><a href="feedback.html" class="drawer-link"><span>Patient Feedback</span> <span>→</span></a></li>
+        <li><a href="contact.html" class="drawer-link"><span>Contact & Location</span> <span>→</span></a></li>
+        <li><a href="track.html" class="drawer-link active"><span>Track Live Order</span> <span>→</span></a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Header -->
+  <header class="section-padding-sm" style="text-align: center; background: radial-gradient(circle at 50% 50%, rgba(217, 37, 37, 0.05) 0%, transparent 60%);">
+    <div class="container">
+      <span class="section-tag">Live Order Telemetry</span>
+      <h1 class="section-title">Track Your Flavor Prescription</h1>
+      <p class="section-subtitle">Real-time status updates from our Udaipur kitchen lab to your doorstep.</p>
+
+      <form id="trackerSearchForm" style="max-width: 460px; margin: 24px auto 0; display: flex; gap: 10px;">
+        <input type="text" id="trackIdInput" class="form-control" placeholder="Enter Order ID (e.g. DPK-749281)" required />
+        <button type="submit" class="btn btn-primary btn-sm">Track</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- Live Status Card -->
+  <main class="container section-padding" style="padding-top: 10px;" id="orderTrackerDisplay">
+    <div class="checkout-card" style="max-width: 760px; margin: 0 auto;">
+      
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; border-bottom: 2px solid var(--border-dark); padding-bottom: 20px;">
+        <div>
+          <span style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 1px;">Tracking Order</span>
+          <h2 style="font-size: 1.8rem; font-family: var(--font-mono); color: var(--accent-red);" id="trackOrderIdSpan">DPK-749281</h2>
+        </div>
+        <div style="text-align: right;">
+          <span class="section-tag" id="trackStatusBadge" style="margin-bottom: 4px; background: var(--accent-green-subtle); color: var(--accent-green);">Status: Baking in Clay Oven</span>
+          <div style="font-size: 0.88rem; color: var(--text-secondary);" id="trackArrivalEstimate">Estimated arrival: <strong>~22 Minutes</strong></div>
+        </div>
+      </div>
+
+      <!-- Live Timeline -->
+      <div class="track-timeline">
+        <!-- Step 1 -->
+        <div class="track-step done">
+          <div class="step-icon-bubble">✓</div>
+          <div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 2px;">Prescription Confirmed & Diagnosed</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Kitchen received your order details and ingredients dispatched from sterile storage.</p>
+            <small style="color: var(--accent-green); font-weight: 700;">Completed (9 mins ago)</small>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="track-step current">
+          <div class="step-icon-bubble">🍕</div>
+          <div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 2px;">Cooking in Lab & Clay Pot Baking</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Chef Dipjit is baking your Kulhad Pizza inside traditional kilns and frying fresh Kurkure momos.</p>
+            <small style="color: var(--accent-red); font-weight: 700;">In Progress (Current Stage)</small>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="track-step">
+          <div class="step-icon-bubble">🛡️</div>
+          <div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 2px;">Sanitization & Security Seal</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Double thermal packaging check and tamper-proof security sticker applied.</p>
+            <small style="color: var(--text-muted);">Upcoming</small>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="track-step" id="trackStep4">
+          <div class="step-icon-bubble">🛵</div>
+          <div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 2px;">Rider Out For Delivery</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);" id="trackStep4Desc">Delivery partner will be assigned when food is ready to pick up.</p>
+            <small style="color: var(--text-muted);" id="trackStep4Badge">Upcoming</small>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="track-step">
+          <div class="step-icon-bubble">😋</div>
+          <div>
+            <h4 style="font-size: 1.15rem; margin-bottom: 2px;">Delivered & Relished</h4>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Piping hot craving satisfied!</p>
+            <small style="color: var(--text-muted);">Upcoming</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dedicated Rider Info Section (Dynamically updated: NO number until assigned) -->
+      <div id="trackRiderCard" style="margin-top: 24px;"></div>
+
+      <!-- Action Buttons -->
+      <div id="trackActionButtons" style="border-top: 1px dashed var(--border-light); padding-top: 20px; display: flex; gap: 14px; flex-wrap: wrap;">
+        <a href="https://wa.me/919366727036?text=Hi%20Dipjit's%20Kitchen,%20please%20update%20me%20on%20my%20order!" target="_blank" class="btn btn-secondary" style="flex-grow: 1;">
+          💬 WhatsApp Kitchen
+        </a>
+        <a href="tel:+919366727036" class="btn btn-white" style="flex-grow: 1; border: 1.5px solid var(--border-dark);">
+          📞 Call Kitchen Support (9366727036)
+        </a>
+        <div id="trackRiderButtonWrapper" style="width: 100%;">
+          <!-- Rendered via JS: NO rider number until assigned -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+        <div>© 2026 Dipjit's Pharma Kitchen. Udaipur, Tripura.</div>
+        <div><a href="menu.html" class="btn btn-primary btn-sm">Order More Food</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/+919366727036?text=Hi,%20What,s%20today%20to%20cure%20your%20flavour%20deficiency??" target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
+    <span>💬 WhatsApp 9366727036</span>
+  </a>
+
+  <!-- Firebase Compat Engine (Works on file:// and http/https) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="assets/js/firebase-config.js"></script>
+  <script src="assets/js/firebase-order.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/main.js"></script>
+
+  <!-- Real-time Order Tracking via Firestore -->
+  <script>
+    function initFirebaseTracking() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var orderId = urlParams.get("orderId");
+      if (!orderId) return;
+
+      if (!window.firebaseOrder || !window.firebaseOrder.isFirebaseReady()) {
+        console.log("Firebase connecting for tracking...");
+      }
+
+      var orderIdSpan = document.getElementById("trackOrderIdSpan");
+      if (orderIdSpan) orderIdSpan.textContent = orderId;
+
+      var statusMap = {
+        "new":              1,
+        "accepted":         1,
+        "preparing":        2,
+        "ready":            3,
+        "out_for_delivery": 4,
+        "delivered":        5
+      };
+
+      var statusLabels = {
+        "new":              "Order Received — Awaiting Confirmation",
+        "accepted":         "Prescription Confirmed & Diagnosed",
+        "preparing":        "Cooking in Lab & Clay Pot Baking",
+        "ready":            "Sanitization & Security Seal Applied",
+        "out_for_delivery": "Rider Out For Delivery 🛵",
+        "delivered":        "Delivered & Relished ✅",
+        "cancelled":        "Order Cancelled ❌"
+      };
+
+      if (window.firebaseOrder && window.firebaseOrder.trackOrderRealtime) {
+        window.firebaseOrder.trackOrderRealtime(orderId, function (orderData) {
+          if (!orderData) {
+            var tracker = document.getElementById("orderTrackerDisplay");
+            if (tracker) {
+              tracker.innerHTML = 
+                '<div class="checkout-card" style="max-width: 760px; margin: 0 auto; text-align: center; padding: 60px 20px;">' +
+                  '<div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>' +
+                  '<h3 style="font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 10px;">Order Not Found</h3>' +
+                  '<p style="color: var(--text-secondary); max-width: 400px; margin: 0 auto;">' +
+                    'We could not find an order with ID <strong style="font-family: var(--font-mono); color: var(--accent-red);">' + orderId + '</strong>. ' +
+                    'Please double-check your Order ID and try again.' +
+                  '</p>' +
+                '</div>';
+            }
+            return;
+          }
+
+          var status = (orderData.status || "new").toLowerCase();
+          var isCancelled = (status === "cancelled");
+          var currentStep = statusMap[status] || 1;
+          var steps = document.querySelectorAll(".track-step");
+
+          // Cancellation Notice UI banner
+          var existingNotice = document.getElementById("trackCancelledNotice");
+          var timelineEl = document.querySelector(".track-timeline");
+          var statusBadge = document.getElementById("trackStatusBadge") || document.querySelector(".section-tag[style*='background']");
+          var arrivalEl = document.getElementById("trackArrivalEstimate");
+
+          if (isCancelled) {
+            if (!existingNotice) {
+              existingNotice = document.createElement("div");
+              existingNotice.id = "trackCancelledNotice";
+              existingNotice.style.cssText = "background: #fef2f2; border: 2.5px solid #ef4444; border-radius: 12px; padding: 26px 20px; text-align: center; margin-bottom: 24px; box-shadow: 0 4px 14px rgba(239, 68, 68, 0.15); animation: fadeIn 0.3s ease;";
+              var cardContainer = document.querySelector(".checkout-card");
+              if (cardContainer && timelineEl) {
+                cardContainer.insertBefore(existingNotice, timelineEl);
+              }
+            }
+            var cancelMsg = orderData.cancelReason || (orderData.statusHistory && orderData.statusHistory.slice(-1)[0] && orderData.statusHistory.slice(-1)[0].note) || "Order was cancelled by kitchen.";
+            existingNotice.innerHTML = 
+              '<div style="font-size: 3.5rem; margin-bottom: 8px;">❌</div>' +
+              '<h2 style="color: #b91c1c; font-size: 1.8rem; margin-bottom: 8px; font-family: var(--font-serif);">This Order Has Been Cancelled</h2>' +
+              '<p style="color: #7f1d1d; font-size: 1.05rem; max-width: 520px; margin: 0 auto 12px; font-weight: 600;">' +
+                'The kitchen marked this order as cancelled.' +
+              '</p>' +
+              '<div style="display: inline-block; background: #fee2e2; color: #991b1b; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 0.92rem; margin-bottom: 16px; border: 1.5px solid #f87171;">' +
+                'Reason: ' + cancelMsg +
+              '</div>' +
+              '<p style="font-size: 0.88rem; color: #7f1d1d; margin-bottom: 18px;">' +
+                'If you have questions or wish to place a fresh order, please call our kitchen directly.' +
+              '</p>' +
+              '<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">' +
+                '<a href="tel:+919366727036" class="btn btn-primary" style="background: #b91c1c; border-color: #991b1b; padding: 10px 20px;">' +
+                  '📞 Call Kitchen: 9366727036' +
+                '</a>' +
+                '<a href="https://wa.me/919366727036?text=Hi%20Dipjit\'s%20Pharma%20Kitchen,%20my%20order%20' + orderId + '%20was%20cancelled." target="_blank" class="btn btn-secondary" style="padding: 10px 20px;">' +
+                  '💬 WhatsApp Kitchen' +
+                '</a>' +
+              '</div>';
+
+            if (timelineEl) {
+              timelineEl.style.opacity = "0.35";
+              timelineEl.style.filter = "grayscale(80%)";
+              timelineEl.style.pointerEvents = "none";
+            }
+            if (arrivalEl) {
+              arrivalEl.innerHTML = '<strong style="color: #b91c1c;">Status: Cancelled</strong>';
+            }
+          } else {
+            if (existingNotice) existingNotice.remove();
+            if (timelineEl) {
+              timelineEl.style.opacity = "1";
+              timelineEl.style.filter = "none";
+              timelineEl.style.pointerEvents = "auto";
+            }
+          }
+
+          steps.forEach(function (stepEl, idx) {
+            var stepNum = idx + 1;
+            stepEl.classList.remove("done", "current");
+            if (isCancelled) {
+              stepEl.classList.remove("done", "current");
+            } else if (stepNum < currentStep) {
+              stepEl.classList.add("done");
+            } else if (stepNum === currentStep) {
+              stepEl.classList.add("current");
+            }
+          });
+
+          if (statusBadge) {
+            var label = statusLabels[status] || status;
+            statusBadge.textContent = "Status: " + label;
+            if (status === "delivered") {
+              statusBadge.style.background = "var(--accent-green-subtle)";
+              statusBadge.style.color = "var(--accent-green)";
+              statusBadge.style.border = "1.5px solid var(--accent-green)";
+            } else if (isCancelled) {
+              statusBadge.style.background = "#fee2e2";
+              statusBadge.style.color = "#b91c1c";
+              statusBadge.style.border = "1.5px solid #ef4444";
+            } else {
+              statusBadge.style.background = "var(--accent-green-subtle)";
+              statusBadge.style.color = "var(--accent-green)";
+              statusBadge.style.border = "none";
+            }
+          }
+
+          if (orderData.customerName) {
+            var nameEl = document.getElementById("trackCustomerName");
+            if (nameEl) nameEl.textContent = orderData.customerName;
+          }
+
+          // RIDER ASSIGNMENT HANDLING:
+          // "first don't show any number until any rider is assigned and after assigning show his name and number"
+          var rider = orderData.deliveryBoy || orderData.riderInfo || null;
+          var riderCard = document.getElementById("trackRiderCard");
+          var riderBtnWrapper = document.getElementById("trackRiderButtonWrapper");
+          var step4Desc = document.getElementById("trackStep4Desc");
+          var step4Badge = document.getElementById("trackStep4Badge");
+
+          if (isCancelled) {
+            if (riderCard) riderCard.style.display = "none";
+            if (riderBtnWrapper) riderBtnWrapper.style.display = "none";
+          } else if (rider && rider.name && rider.phone) {
+            // RIDER IS ASSIGNED: Show name and phone number!
+            var cleanPhone = rider.phone.replace(/[^0-9+]/g, '');
+            if (riderCard) {
+              riderCard.style.display = "block";
+              riderCard.innerHTML = 
+                '<div style="background: #f5f3ff; border: 2px solid #8b5cf6; border-radius: 12px; padding: 18px 20px; box-shadow: 0 4px 14px rgba(139,92,246,0.15); animation: fadeIn 0.3s ease;">' +
+                  '<div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">' +
+                    '<div style="display: flex; align-items: center; gap: 12px;">' +
+                      '<div style="width: 48px; height: 48px; border-radius: 50%; background: #ede9fe; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 1.5px solid #c4b5fd;">🛵</div>' +
+                      '<div>' +
+                        '<div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #7c3aed; letter-spacing: 0.5px;">Delivery Partner Assigned</div>' +
+                        '<h3 style="font-size: 1.25rem; margin: 2px 0; color: #1e1b4b; font-family: var(--font-serif);">' + rider.name + '</h3>' +
+                        '<span style="font-size: 0.92rem; color: #5b21b6; font-weight: 700;">📞 ' + rider.phone + '</span>' +
+                      '</div>' +
+                    '</div>' +
+                    '<a href="tel:' + cleanPhone + '" class="btn btn-primary" style="background: #7c3aed; border-color: #6d28d9; padding: 12px 22px; font-weight: 800; font-size: 0.95rem;">' +
+                      '📞 Call Rider: ' + rider.phone +
+                    '</a>' +
+                  '</div>' +
+                '</div>';
+            }
+            if (riderBtnWrapper) {
+              riderBtnWrapper.style.display = "block";
+              riderBtnWrapper.innerHTML = 
+                '<a href="tel:' + cleanPhone + '" class="btn btn-primary" style="width: 100%; background: #7c3aed; border-color: #6d28d9; padding: 14px; font-weight: 800; font-size: 1.05rem; display: flex; align-items: center; justify-content: center; gap: 8px;">' +
+                  '📞 Call Assigned Rider: ' + rider.name + ' (' + rider.phone + ')' +
+                '</a>';
+            }
+            if (step4Desc) {
+              step4Desc.innerHTML = 'Delivery Partner: <strong style="color: #7c3aed;">' + rider.name + '</strong> (' + rider.phone + ') is delivering your meal.';
+            }
+            if (step4Badge) {
+              step4Badge.textContent = '🛵 Rider Assigned: ' + rider.name;
+              step4Badge.style.color = '#7c3aed';
+              step4Badge.style.fontWeight = '800';
+            }
+          } else {
+            // NO RIDER ASSIGNED YET: DO NOT SHOW ANY NUMBER!
+            if (riderCard) {
+              riderCard.style.display = "block";
+              riderCard.innerHTML = 
+                '<div style="background: var(--bg-cream); border: 1.5px dashed var(--border-dark); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">' +
+                  '<div style="display: flex; align-items: center; gap: 10px;">' +
+                    '<span style="font-size: 1.6rem;">🛵</span>' +
+                    '<div>' +
+                      '<strong style="font-size: 0.95rem; display: block; color: var(--text-primary);">Delivery Partner</strong>' +
+                      '<span style="font-size: 0.82rem; color: var(--text-secondary);">Rider will be assigned once meal is freshly prepared</span>' +
+                    '</div>' +
+                  '</div>' +
+                  '<span style="background: var(--bg-subtle); color: var(--text-muted); font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1px solid var(--border-light);">' +
+                    'Awaiting Assignment' +
+                  '</span>' +
+                '</div>';
+            }
+            if (riderBtnWrapper) {
+              riderBtnWrapper.style.display = "block";
+              riderBtnWrapper.innerHTML = 
+                '<div style="text-align: center; background: var(--bg-cream); border: 1.5px dashed var(--border-dark); border-radius: 8px; padding: 12px; font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">' +
+                  '🛵 Rider will be assigned when food is ready. Rider contact details will appear here.' +
+                '</div>';
+            }
+            if (step4Desc) {
+              step4Desc.textContent = 'Delivery partner will be assigned when food is ready to pick up.';
+            }
+            if (step4Badge) {
+              step4Badge.textContent = 'Upcoming';
+              step4Badge.style.color = 'var(--text-muted)';
+              step4Badge.style.fontWeight = 'normal';
+            }
+          }
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener("DOMContentLoaded", initFirebaseTracking);
+    } else {
+      initFirebaseTracking();
+    }
+  </script>
+</body>
+</html>

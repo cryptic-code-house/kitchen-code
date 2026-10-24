@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="cheeseGradTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF0A0"/>
+      <stop offset="100%" stop-color="#FFD447"/>
+    </linearGradient>
+    <linearGradient id="cheeseGradSide" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFC720"/>
+      <stop offset="100%" stop-color="#E5A000"/>
+    </linearGradient>
+  </defs>
+  <!-- 3D Cheese Cube -->
+  <!-- Top Face -->
+  <polygon points="50,15 85,32 50,50 15,32" fill="url(#cheeseGradTop)" stroke="#1C1512" stroke-width="2.5"/>
+  <!-- Left Face -->
+  <polygon points="15,32 50,50 50,85 15,67" fill="url(#cheeseGradSide)" stroke="#1C1512" stroke-width="2.5"/>
+  <!-- Right Face -->
+  <polygon points="50,50 85,32 85,67 50,85" fill="#E5A000" stroke="#1C1512" stroke-width="2.5"/>
+  <!-- Cheese Holes -->
+  <ellipse cx="40" cy="30" rx="4" ry="2" fill="#E5A000" opacity="0.6"/>
+  <ellipse cx="65" cy="40" rx="3" ry="2" fill="#C68600" opacity="0.6"/>
+  <ellipse cx="32" cy="55" rx="5" ry="7" fill="#C68600" opacity="0.7"/>
+</svg>

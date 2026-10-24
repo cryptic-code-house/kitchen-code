@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="basilGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#55B358"/>
+      <stop offset="60%" stop-color="#2E7D32"/>
+      <stop offset="100%" stop-color="#1B5E20"/>
+    </linearGradient>
+  </defs>
+  <!-- Basil leaf shape -->
+  <path d="M 50 8 C 82 24 92 68 52 92 C 16 72 20 28 50 8 Z" fill="url(#basilGrad)" stroke="#1C1512" stroke-width="2.5"/>
+  <!-- Central vein -->
+  <path d="M 50 12 Q 52 50 52 88" stroke="#7CD97F" stroke-width="2" fill="none"/>
+  <!-- Side veins -->
+  <path d="M 50 35 Q 68 38 76 46" stroke="#7CD97F" stroke-width="1.5" fill="none"/>
+  <path d="M 50 52 Q 70 56 74 66" stroke="#7CD97F" stroke-width="1.5" fill="none"/>
+  <path d="M 50 35 Q 32 38 26 48" stroke="#7CD97F" stroke-width="1.5" fill="none"/>
+  <path d="M 50 54 Q 34 58 30 68" stroke="#7CD97F" stroke-width="1.5" fill="none"/>
+</svg>
